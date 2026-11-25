@@ -22,9 +22,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // =========================================================
-  // 1. LOGIC SECTION (Data & Functions)
-  // =========================================================
 
   // LOGIC: List of Maps storing study goals in memory
   List<Map<String, dynamic>> goals = [
@@ -63,9 +60,6 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  // =========================================================
-  // 2. STATIC / UI SECTION (Widgets & Connection Points)
-  // =========================================================
 
   @override
   Widget build(BuildContext context) {
