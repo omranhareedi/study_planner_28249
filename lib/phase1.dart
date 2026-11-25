@@ -17,17 +17,17 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // STATIC
+    // STATIC Main screen scaffold
     return Scaffold(
-      // STATIC
+      // STATIC Top navigation bar
       appBar: AppBar(title: const Text('My Study Planner')),
-      // STATIC
+      // STATIC Body container and vertical layout
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // STATIC
+            // STATIC Section heading
             const Text(
               'My Study Goals',
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),

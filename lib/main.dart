@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -8,61 +7,126 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: HomeScreen());
+    // STATIC: Root application setup
+    return const MaterialApp(
+      home: HomeScreen(),
+    );
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  // =========================================================
+  // 1. LOGIC SECTION (Data & Functions)
+  // =========================================================
+
+  // LOGIC: List of Maps storing study goals in memory
+  List<Map<String, dynamic>> goals = [
+    {'subject': 'Math', 'hours': 4, 'done': false},
+    {'subject': 'English', 'hours': 2, 'done': false},
+    {'subject': 'Arabic', 'hours': 1, 'done': false},
+  ];
+
+  // LOGIC: Sample subjects cycled through when tapping the + button
+  final List<String> _sampleSubjects = [
+    'Physics',
+    'Biology',
+    'History',
+    'Database Systems',
+  ];
+
+  // LOGIC: Adds a sample goal and updates the UI
+  void addSampleGoal() {
+    setState(() {
+      final subject = _sampleSubjects[goals.length % _sampleSubjects.length];
+      goals.add({'subject': subject, 'hours': 2, 'done': false});
+    });
+  }
+
+  // LOGIC: Toggles the 'done' boolean at the given index
+  void toggleGoal(int index) {
+    setState(() {
+      goals[index]['done'] = !goals[index]['done'];
+    });
+  }
+
+  // LOGIC: Removes the goal at the given index
+  void deleteGoal(int index) {
+    setState(() {
+      goals.removeAt(index);
+    });
+  }
+
+  // =========================================================
+  // 2. STATIC / UI SECTION (Widgets & Connection Points)
+  // =========================================================
+
+  @override
   Widget build(BuildContext context) {
-    // STATIC
+    // STATIC: Main screen scaffold
     return Scaffold(
-      // STATIC
+      // STATIC: Top navigation bar
       appBar: AppBar(title: const Text('My Study Planner')),
-      // STATIC
+      // STATIC: Body container and vertical layout
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // STATIC
+            // STATIC: Section heading
             const Text(
               'My Study Goals',
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
-            // STATIC Hard-coded study goal card
-            const Card(
-              child: ListTile(
-                leading: Icon(Icons.book),
-                title: Text('Math'),
-                subtitle: Text('4 hours'),
-              ),
-            ),
-            // STATIC 
-            const Card(
-              child: ListTile(
-                leading: Icon(Icons.book),
-                title: Text('English'),
-                subtitle: Text('2 hours'),
-              ),
-            ),
-            // STATIC 
-            const Card(
-              child: ListTile(
-                leading: Icon(Icons.book),
-                title: Text('Arabic'),
-                subtitle: Text('1 hours'),
+            // STATIC: Dynamic scrollable list of goal cards
+            Expanded(
+              child: ListView.builder(
+                itemCount: goals.length,
+                itemBuilder: (context, index) {
+                  final goal = goals[index];
+                  final bool isDone = goal['done'];
+
+                  return Card(
+                    child: ListTile(
+                      // CONNECTION: Checkbox toggles goal completion
+                      leading: Checkbox(
+                        value: isDone,
+                        onChanged: (value) => toggleGoal(index),
+                      ),
+                      title: Text(
+                        goal['subject'],
+                        style: TextStyle(
+                          decoration: isDone
+                              ? TextDecoration.lineThrough
+                              : TextDecoration.none,
+                          color: isDone ? Colors.grey : Colors.black,
+                        ),
+                      ),
+                      subtitle: Text('${goal['hours']} hours'),
+                      // CONNECTION: Delete icon removes goal from list
+                      trailing: IconButton(
+                        icon: const Icon(Icons.delete, color: Colors.red),
+                        onPressed: () => deleteGoal(index),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           ],
         ),
       ),
-      // STATIC
+      // STATIC: Floating action button to add goals
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        // CONNECTION: Triggers adding a sample goal
+        onPressed: addSampleGoal,
         child: const Icon(Icons.add),
       ),
     );
