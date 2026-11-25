@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Flutter code sample for [FloatingActionButton].
 
 void main() => runApp(const MyApp());
 
