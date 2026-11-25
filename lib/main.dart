@@ -34,7 +34,7 @@ class HomeScreen extends StatelessWidget {
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
-            // STATIC
+            // STATIC Hard-coded study goal card
             const Card(
               child: ListTile(
                 leading: Icon(Icons.book),
@@ -42,7 +42,7 @@ class HomeScreen extends StatelessWidget {
                 subtitle: Text('4 hours'),
               ),
             ),
-            // STATIC
+            // STATIC 
             const Card(
               child: ListTile(
                 leading: Icon(Icons.book),
@@ -50,7 +50,7 @@ class HomeScreen extends StatelessWidget {
                 subtitle: Text('2 hours'),
               ),
             ),
-            // STATIC
+            // STATIC 
             const Card(
               child: ListTile(
                 leading: Icon(Icons.book),
